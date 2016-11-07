@@ -1,0 +1,12 @@
+Source: gooroom-showdesktop-plugin
+Section: xfce
+Priority: optional
+Maintainer: Gooroom Maintainers <gooroom@gooroom.kr>
+Build-Depends: debhelper (>= 9), autotools-dev, autoconf, automake, intltool, libtool, xfce4-dev-tools,
+ libxfce4panel-2.0-dev, libglib2.0-dev, libgtk-3-dev, libxfce4util-dev, libwnck-3-dev
+Standards-Version: 3.9.6
+
+Package: gooroom-showdesktop-plugin
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libwnck-3-0
+Description: Xfce4 panel plugin for showing desktop
