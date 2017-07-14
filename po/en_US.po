@@ -1,4 +1,4 @@
-# Korean translations for gooroom-showdesktop-plugin package.
+# English(USA) translations for gooroom-showdesktop-plugin package.
 # Copyright (C) 2016 THE gooroom-showdesktop-plugin'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gooroom-showdesktop-plugin package.
 # gooroom <gooroom@localhost>, 2016.
@@ -10,7 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2016-11-04 12:52+0900\n"
 "PO-Revision-Date: 2016-11-04 12:54+0900\n"
 "Language-Team: Korean\n"
-"Language: en_GB\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

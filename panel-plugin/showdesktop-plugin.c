@@ -1,4 +1,8 @@
 /*
+ * Copyright (c) 2005-2007 Jasper Huijsmans <jasper@xfce.org>
+ * Copyright (C) 2007-2010 Nick Schermer <nick@xfce.org>
+ * Copyright (C) 2017 Gooroom Project Team
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
@@ -149,7 +153,7 @@ show_desktop_plugin_screen_changed (GtkWidget *widget,
 
 	/* get the new wnck screen */
 	screen = gtk_widget_get_screen (widget);
-	wnck_screen = wnck_screen_get (gdk_screen_get_number (screen));
+	wnck_screen = wnck_screen_get (gdk_x11_screen_get_screen_number (screen));
 	g_return_if_fail (WNCK_IS_SCREEN (wnck_screen));
 
 	/* leave when the wnck screen did not change */
@@ -211,15 +215,15 @@ showdesktop_plugin_construct (XfcePanelPlugin *panel_plugin)
 	plugin->button = xfce_panel_create_toggle_button ();
 	gtk_button_set_relief (GTK_BUTTON (plugin->button), GTK_RELIEF_NONE);
 	gtk_container_add (GTK_CONTAINER (plugin), plugin->button);
-	gtk_widget_set_name (plugin->button, "showdesktop-button");
+	gtk_widget_set_name (plugin->button, "show-desktop-button");
 
 	xfce_panel_plugin_add_action_widget (XFCE_PANEL_PLUGIN (plugin), plugin->button);
 	gtk_widget_show (plugin->button);
 
 	GtkWidget *image = gtk_image_new ();
 	gtk_container_add (GTK_CONTAINER (plugin->button), image);
-	gtk_image_set_from_icon_name (GTK_IMAGE (image), "show-desktop-symbolic", GTK_ICON_SIZE_BUTTON);
-	gtk_image_set_pixel_size (GTK_IMAGE (image), 8);
+	gtk_image_set_from_icon_name (GTK_IMAGE (image), "showdesktop-plugin-symbolic", GTK_ICON_SIZE_BUTTON);
+	gtk_image_set_pixel_size (GTK_IMAGE (image), 22);
 
 	gtk_widget_show (image);
 
