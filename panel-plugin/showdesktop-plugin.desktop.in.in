@@ -5,5 +5,6 @@ _Name=Gooroom Show Desktop Plugin
 _Comment=Plug-in to minimize all open windows and show the desktop
 Icon=showdesktop-plugin
 X-XFCE-Module=showdesktop-plugin
+X-XFCE-Unique=TRUE
 X-XFCE-Internal=FALSE
 X-XFCE-API=@LIBXFCE4PANEL_VERSION_API@
