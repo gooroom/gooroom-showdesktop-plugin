@@ -227,8 +227,6 @@ showdesktop_plugin_construct (XfcePanelPlugin *panel_plugin)
 
 	gtk_widget_show (image);
 
-	xfce_panel_plugin_set_small (panel_plugin, TRUE);
-
 	g_signal_connect (G_OBJECT (plugin->button), "toggled",
 		G_CALLBACK (show_desktop_plugin_toggled), plugin);
 
