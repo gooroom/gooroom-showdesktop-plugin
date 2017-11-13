@@ -1,3 +1,14 @@
+gooroom-showdesktop-plugin (0.2.1+grm1u1) unstable; urgency=medium
+
+  [ cjheo ]
+  * [78e4e05d] Changed icons and delete unnecessary files
+  * [c77f1d6a] Modify desktop file to prevent module from being added redundantly
+  * [de04d4ff] Delete unnecessary code
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Mon, 13 Nov 2017 21:08:40 +0900
+
 gooroom-showdesktop-plugin (0.1+grm1) unstable; urgency=medium
 
   * UNRELEASED
