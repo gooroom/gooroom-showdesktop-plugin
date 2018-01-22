@@ -56,6 +56,7 @@ struct _ShowDesktopPlugin
 	XfcePanelPlugin      __parent__;
 
 	GtkWidget       *button;
+	GtkWidget       *img_tray;
 
 	/* the wnck screen */
 	WnckScreen *wnck_screen;
@@ -63,6 +64,18 @@ struct _ShowDesktopPlugin
 
 /* dinstallefine the plugin */
 XFCE_PANEL_DEFINE_PLUGIN (ShowDesktopPlugin, showdesktop_plugin)
+
+static gboolean
+lazy_load_image (gpointer data)
+{
+	ShowDesktopPlugin *plugin = SHOWDESKTOP_PLUGIN (data);
+
+	plugin->img_tray = gtk_image_new_from_icon_name ("showdesktop-plugin-symbolic", GTK_ICON_SIZE_LARGE_TOOLBAR);
+	gtk_container_add (GTK_CONTAINER (plugin->button), plugin->img_tray);
+	gtk_widget_show (plugin->img_tray);
+
+	return FALSE;
+}
 
 static gboolean
 show_desktop_plugin_button_release_event (GtkToggleButton   *button,
@@ -198,6 +211,7 @@ static void
 showdesktop_plugin_init (ShowDesktopPlugin *plugin)
 {
 	plugin->button      = NULL;
+	plugin->img_tray    = NULL;
 	plugin->wnck_screen = NULL;
 
 /* monitor screen changes */
@@ -215,17 +229,11 @@ showdesktop_plugin_construct (XfcePanelPlugin *panel_plugin)
 	plugin->button = xfce_panel_create_toggle_button ();
 	gtk_button_set_relief (GTK_BUTTON (plugin->button), GTK_RELIEF_NONE);
 	gtk_container_add (GTK_CONTAINER (plugin), plugin->button);
-	gtk_widget_set_name (plugin->button, "show-desktop-button");
 
 	xfce_panel_plugin_add_action_widget (XFCE_PANEL_PLUGIN (plugin), plugin->button);
 	gtk_widget_show (plugin->button);
 
-	GtkWidget *image = gtk_image_new ();
-	gtk_container_add (GTK_CONTAINER (plugin->button), image);
-	gtk_image_set_from_icon_name (GTK_IMAGE (image), "showdesktop-plugin-symbolic", GTK_ICON_SIZE_BUTTON);
-	gtk_image_set_pixel_size (GTK_IMAGE (image), 22);
-
-	gtk_widget_show (image);
+	g_timeout_add (200, (GSourceFunc)lazy_load_image, plugin);
 
 	g_signal_connect (G_OBJECT (plugin->button), "toggled",
 		G_CALLBACK (show_desktop_plugin_toggled), plugin);

@@ -1,3 +1,1 @@
-SUBDIRS =								\
-	apps								\
-	status
+SUBDIRS = apps
