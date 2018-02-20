@@ -204,6 +204,8 @@ showdesktop_plugin_init (ShowDesktopPlugin *plugin)
 	plugin->button      = NULL;
 	plugin->wnck_screen = NULL;
 
+	xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+
 	/* monitor screen changes */
 	g_signal_connect (G_OBJECT (plugin), "screen-changed",
 			G_CALLBACK (show_desktop_plugin_screen_changed), NULL);
@@ -225,14 +227,6 @@ showdesktop_plugin_init (ShowDesktopPlugin *plugin)
 	}
 
 	gtk_widget_show_all (plugin->button);
-}
-
-static void
-showdesktop_plugin_construct (XfcePanelPlugin *panel_plugin)
-{
-	ShowDesktopPlugin *plugin = SHOWDESKTOP_PLUGIN (panel_plugin);
-
-	xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
 	g_signal_connect (G_OBJECT (plugin->button), "toggled",
 		G_CALLBACK (show_desktop_plugin_toggled), plugin);
@@ -253,7 +247,6 @@ showdesktop_plugin_class_init (ShowDesktopPluginClass *klass)
 	XfcePanelPluginClass *plugin_class;
 
 	plugin_class = XFCE_PANEL_PLUGIN_CLASS (klass);
-	plugin_class->construct = showdesktop_plugin_construct;
 	plugin_class->free_data = showdesktop_plugin_free_data;
 	plugin_class->size_changed = showdesktop_plugin_size_changed;
 	plugin_class->mode_changed = showdesktop_plugin_mode_changed;
