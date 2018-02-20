@@ -44,6 +44,8 @@
 #include <libwnck/libwnck.h>
 
 
+#define PANEL_TRAY_ICON_SIZE    (22)
+
 
 struct _ShowDesktopPluginClass
 {
@@ -55,8 +57,7 @@ struct _ShowDesktopPlugin
 {
 	XfcePanelPlugin      __parent__;
 
-	GtkWidget       *button;
-	GtkWidget       *img_tray;
+	GtkWidget *button;
 
 	/* the wnck screen */
 	WnckScreen *wnck_screen;
@@ -65,17 +66,7 @@ struct _ShowDesktopPlugin
 /* dinstallefine the plugin */
 XFCE_PANEL_DEFINE_PLUGIN (ShowDesktopPlugin, showdesktop_plugin)
 
-static gboolean
-lazy_load_image (gpointer data)
-{
-	ShowDesktopPlugin *plugin = SHOWDESKTOP_PLUGIN (data);
 
-	plugin->img_tray = gtk_image_new_from_icon_name ("showdesktop-plugin-symbolic", GTK_ICON_SIZE_LARGE_TOOLBAR);
-	gtk_container_add (GTK_CONTAINER (plugin->button), plugin->img_tray);
-	gtk_widget_show (plugin->img_tray);
-
-	return FALSE;
-}
 
 static gboolean
 show_desktop_plugin_button_release_event (GtkToggleButton   *button,
@@ -110,20 +101,6 @@ show_desktop_plugin_button_release_event (GtkToggleButton   *button,
 	return FALSE;
 }
 
-static gboolean
-showdesktop_plugin_size_changed (XfcePanelPlugin *panel_plugin, gint size)
-{
-	ShowDesktopPlugin *plugin = SHOWDESKTOP_PLUGIN (panel_plugin);
-
-	if (xfce_panel_plugin_get_mode (panel_plugin) == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL) {
-		gtk_widget_set_size_request (GTK_WIDGET (panel_plugin), -1, size);
-	} else {
-		gtk_widget_set_size_request (GTK_WIDGET (panel_plugin), size, -1);
-	}
-
-	return TRUE;
-}
-
 static void
 show_desktop_plugin_toggled (GtkToggleButton   *button,
                              ShowDesktopPlugin *plugin)
@@ -139,6 +116,20 @@ show_desktop_plugin_toggled (GtkToggleButton   *button,
 	if (active != wnck_screen_get_showing_desktop (plugin->wnck_screen)) {
 		wnck_screen_toggle_showing_desktop (plugin->wnck_screen, active);
 	}
+}
+
+static gboolean
+showdesktop_plugin_size_changed (XfcePanelPlugin *panel_plugin, gint size)
+{
+	ShowDesktopPlugin *plugin = SHOWDESKTOP_PLUGIN (panel_plugin);
+
+	if (xfce_panel_plugin_get_mode (panel_plugin) == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL) {
+		gtk_widget_set_size_request (GTK_WIDGET (panel_plugin), -1, size);
+	} else {
+		gtk_widget_set_size_request (GTK_WIDGET (panel_plugin), size, -1);
+	}
+
+	return TRUE;
 }
 
 static void
@@ -211,12 +202,29 @@ static void
 showdesktop_plugin_init (ShowDesktopPlugin *plugin)
 {
 	plugin->button      = NULL;
-	plugin->img_tray    = NULL;
 	plugin->wnck_screen = NULL;
 
-/* monitor screen changes */
+	/* monitor screen changes */
 	g_signal_connect (G_OBJECT (plugin), "screen-changed",
 			G_CALLBACK (show_desktop_plugin_screen_changed), NULL);
+
+	plugin->button = xfce_panel_create_toggle_button ();
+	xfce_panel_plugin_add_action_widget (XFCE_PANEL_PLUGIN (plugin), plugin->button);
+	gtk_container_add (GTK_CONTAINER (plugin), plugin->button);
+
+	GdkPixbuf *pix;
+	pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                    "showdesktop-plugin-symbolic",
+                                    PANEL_TRAY_ICON_SIZE,
+                                    GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
+
+	if (pix) {
+		GtkWidget *tray = gtk_image_new_from_pixbuf (pix);
+		gtk_container_add (GTK_CONTAINER (plugin->button), tray);
+		g_object_unref (G_OBJECT (pix));
+	}
+
+	gtk_widget_show_all (plugin->button);
 }
 
 static void
@@ -225,15 +233,6 @@ showdesktop_plugin_construct (XfcePanelPlugin *panel_plugin)
 	ShowDesktopPlugin *plugin = SHOWDESKTOP_PLUGIN (panel_plugin);
 
 	xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
-
-	plugin->button = xfce_panel_create_toggle_button ();
-	gtk_button_set_relief (GTK_BUTTON (plugin->button), GTK_RELIEF_NONE);
-	gtk_container_add (GTK_CONTAINER (plugin), plugin->button);
-
-	xfce_panel_plugin_add_action_widget (XFCE_PANEL_PLUGIN (plugin), plugin->button);
-	gtk_widget_show (plugin->button);
-
-	g_timeout_add (200, (GSourceFunc)lazy_load_image, plugin);
 
 	g_signal_connect (G_OBJECT (plugin->button), "toggled",
 		G_CALLBACK (show_desktop_plugin_toggled), plugin);
