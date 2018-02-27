@@ -88,7 +88,6 @@ Makefile
 icons/Makefile
 icons/scalable/Makefile
 icons/scalable/apps/Makefile
-icons/scalable/status/Makefile
 panel-plugin/Makefile
 panel-plugin/showdesktop-plugin.desktop.in
 po/Makefile.in

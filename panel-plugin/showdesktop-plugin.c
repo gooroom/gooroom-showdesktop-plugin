@@ -44,7 +44,7 @@
 #include <libwnck/libwnck.h>
 
 
-#define PANEL_TRAY_ICON_SIZE    (22)
+#define PANEL_BUTTON_SIZE    (16)
 
 
 struct _ShowDesktopPluginClass
@@ -210,21 +210,17 @@ showdesktop_plugin_init (ShowDesktopPlugin *plugin)
 	g_signal_connect (G_OBJECT (plugin), "screen-changed",
 			G_CALLBACK (show_desktop_plugin_screen_changed), NULL);
 
-	plugin->button = xfce_panel_create_toggle_button ();
+	plugin->button = gtk_toggle_button_new ();
+
+	gtk_widget_set_can_default (GTK_WIDGET (plugin->button), FALSE);
+	gtk_widget_set_can_focus (GTK_WIDGET (plugin->button), FALSE);
+	gtk_button_set_focus_on_click (GTK_BUTTON (plugin->button), FALSE);
+	gtk_widget_set_name (plugin->button, "gooroom-showdesktop-button");
+
 	xfce_panel_plugin_add_action_widget (XFCE_PANEL_PLUGIN (plugin), plugin->button);
 	gtk_container_add (GTK_CONTAINER (plugin), plugin->button);
 
-	GdkPixbuf *pix;
-	pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                    "showdesktop-plugin-symbolic",
-                                    PANEL_TRAY_ICON_SIZE,
-                                    GTK_ICON_LOOKUP_FORCE_SIZE, NULL);
-
-	if (pix) {
-		GtkWidget *tray = gtk_image_new_from_pixbuf (pix);
-		gtk_container_add (GTK_CONTAINER (plugin->button), tray);
-		g_object_unref (G_OBJECT (pix));
-	}
+	gtk_widget_set_size_request (plugin->button, PANEL_BUTTON_SIZE, -1);
 
 	gtk_widget_show_all (plugin->button);
 
