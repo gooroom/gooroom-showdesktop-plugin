@@ -1,3 +1,15 @@
+gooroom-showdesktop-plugin (0.2.2+grm1u1) unstable; urgency=medium
+
+  [ cjheo ]
+  * [652c8567] Changing the file format of the tray icon from svg to png
+  * [b6a8e58c] Using the gtk2 library instead of gtk3 as a stability issue in the xfce4 panel
+  * [3a1af50a] Removing the plugin constructor function
+  * [a069191a] Removed tray icon from panel plugin button
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Wed, 14 Mar 2018 18:30:43 +0900
+
 gooroom-showdesktop-plugin (0.2.1+grm1u1) unstable; urgency=medium
 
   [ cjheo ]
