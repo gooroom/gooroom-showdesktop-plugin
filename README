@@ -1,7 +1,6 @@
-Gooroom Quantification Score Indicator Plugin
+Gooroom Showdesktop Plugin
 ============================
 
-The Gooroom Quantification Score Indicator Plugin is a plugin for representing quantification score of gooroom packages
+Showing desktop plugin for Xfce panel.
+Hide all application windows and show the desktop.
 
-See the file INSTALL for detailed instructions on how to build and install
-Gooroom Quantification Score Indicator Plugin.
