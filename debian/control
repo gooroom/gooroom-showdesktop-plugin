@@ -2,7 +2,18 @@ Source: gooroom-showdesktop-plugin
 Section: xfce
 Priority: optional
 Maintainer: Gooroom Maintainers <gooroom@gooroom.kr>
-Build-Depends: debhelper (>= 9), autotools-dev, autoconf, automake, intltool, libtool, xfce4-dev-tools, xfce4-panel-dev, libglib2.0-dev, libgtk2.0-dev, libxfce4util-dev, libwnck-dev
+Build-Depends: debhelper (>= 9),
+               autotools-dev,
+               autoconf,
+               automake,
+               intltool,
+               libtool,
+               xfce4-dev-tools,
+               xfce4-panel-dev,
+               libglib2.0-dev,
+               libgtk2.0-dev,
+               libxfce4util-dev,
+               libwnck-dev
 Standards-Version: 3.9.6
 
 Package: gooroom-showdesktop-plugin
