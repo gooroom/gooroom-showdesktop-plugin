@@ -1,3 +1,12 @@
+gooroom-showdesktop-plugin (0.2.4+grm1u1) unstable; urgency=medium
+
+  [ cjheo ]
+  * [29d82b94] Update sources and resources regarding copyright
+
+  [ Gooroom Autobuilder ]
+
+ -- Gooroom Autobuilder <jenkins@gooroom.kr>  Fri, 06 Dec 2019 12:31:05 +0900
+
 gooroom-showdesktop-plugin (0.2.3+grm1u1) unstable; urgency=medium
 
   [ user ]
